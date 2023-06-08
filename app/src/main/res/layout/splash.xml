@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/some_id"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:clipToOutline="true"
+    android:background="@drawable/some_id"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="300dp"
+        android:text="Смартлаб"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textAlignment="center"/>
+
+   <!-- КАК ДОЛЖНО БЫТЬ, НО НЕ ПОЛУЧИЛОСЬ <RelativeLayout
+        android:id="@+id/logo"
+        android:layout_width="263dp"
+        android:layout_height="47.77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="334dp"
+        android:layout_marginEnd="92dp"
+        android:background="@drawable/logo" /> -->
+</RelativeLayout>

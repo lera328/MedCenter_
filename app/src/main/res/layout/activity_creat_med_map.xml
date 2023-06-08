@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreatMedMap">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/black"
+        android:text="Создание карты пациента"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/transporent"
+        android:text="Пропустить"
+        android:textSize="15sp"
+        android:textAllCaps="false"
+        android:textColor="@color/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="onClick"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/prevMedMap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10">
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="\tИмя"
+            android:layout_marginBottom="24dp"/>
+        <EditText
+            android:id="@+id/etSName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="\tОтчество"
+            android:layout_marginBottom="24dp"/>
+        <EditText
+            android:id="@+id/etEndName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="\tФамилия"
+            android:layout_marginBottom="24dp"/>
+        <EditText
+            android:id="@+id/etAge"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input"
+            android:ems="10"
+            android:inputType="text"
+            android:hint="\tДата рождения"
+            android:layout_marginBottom="24dp"/>
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/input"
+            android:layout_marginBottom="48dp"/>
+
+        <Button
+            android:id="@+id/buttonCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Создать"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:textSize="17sp"
+            android:background="@drawable/button_blue"
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
