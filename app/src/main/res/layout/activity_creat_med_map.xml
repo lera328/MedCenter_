@@ -89,6 +89,7 @@
             android:ems="10"
             android:inputType="text"
             android:hint="\tДата рождения"
+            android:focusable="false"
             android:layout_marginBottom="24dp"/>
 
         <Spinner

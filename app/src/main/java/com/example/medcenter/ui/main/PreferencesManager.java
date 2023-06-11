@@ -15,6 +15,7 @@ public class PreferencesManager {
     private static final String PASSWORD_KEY = "onboard";
     private static final String SUM_KEY = "sum";
     private static final String PACIENT_KEY="pacient";
+    private static final String ISPACIENT_KEY="ispacient";
 
     private SharedPreferences preferences;
 
@@ -51,11 +52,18 @@ public class PreferencesManager {
          Gson gson = new Gson();
          String json = gson.toJson(p);
          preferences.edit().putString(PACIENT_KEY, json).apply();
+         preferences.edit().putBoolean(ISPACIENT_KEY,true).apply();
      }
      public CardPacient getPacient(){
          Gson gson = new Gson();
          String json = preferences.getString(PACIENT_KEY, "");
          CardPacient pacient = gson.fromJson(json, CardPacient.class);
          return pacient;
+     }
+
+     public boolean isPacient(){
+
+        Boolean r=preferences.getBoolean(ISPACIENT_KEY,false);
+        return r;
      }
 }

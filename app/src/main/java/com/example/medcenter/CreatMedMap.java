@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.medcenter.ui.main.PreferencesManager;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -48,19 +51,25 @@ Spinner spFloors;
         etAge=findViewById(R.id.etAge);
         etAge.setOnClickListener(this::onClick);
         calendar = Calendar.getInstance();
+
+
     }
-
-
 
     public void onClick(View view) {
         if(view.getId()==R.id.button){
         Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
         startActivity(intent1);}
-        if(view.getId()==R.id.buttonCreate && Valid(etName.getText().toString(),
+        if(view.getId()==R.id.buttonCreate){if( Valid(etName.getText().toString(),
                 etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString())){
             CardPacient pacient=new CardPacient(etName.getText().toString(),
                             etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString());
+            PreferencesManager manager=new PreferencesManager(this);
+            manager.setPacient(pacient);
+            Toast.makeText(this,"Карта создана",Toast.LENGTH_LONG).show();
+            Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
+            startActivity(intent1);}else Toast.makeText(this,"Неверные данные",Toast.LENGTH_LONG).show();
         }
+
         if(view.getId()==R.id.etAge) {
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
@@ -69,7 +78,6 @@ Spinner spFloors;
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                     etAge.setText(dayOfMonth + "." + (month + 1) + "." + year);
-
 
                     calendar.set(year, month, dayOfMonth);
                     age = calendar.getTime();

@@ -3,24 +3,20 @@
 
     <item
         android:id="@+id/main_analis"
-        android:title="Dashboard"
+        android:title="Анализы"
         android:icon="@drawable/icon_analis"/>
     <item
         android:id="@+id/main_res"
-        android:title="Home"
+        android:title="Результаты"
         android:icon="@drawable/icon_res"/>
 
     <item
         android:id="@+id/main_support"
-        android:title="About"
+        android:title="Поддержка"
         android:icon="@drawable/icon_support"/>
     <item
         android:id="@+id/main_profile"
-        android:title="About"
+        android:title="Профиль"
         android:icon="@drawable/icon_profile"/>
-    <item
-        android:id="@+id/main_profile1"
-        android:title="About"
-        
-        android:icon="@drawable/icon_profile"/>
+
 </menu>
