@@ -4,6 +4,9 @@ package com.example.medcenter.ui.main;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.medcenter.CardPacient;
+import com.google.gson.Gson;
+
 public class PreferencesManager {
 
     private static final String PREFS_NAME = "MyPrefs";
@@ -11,6 +14,7 @@ public class PreferencesManager {
     private static final String REGISTRATION_KEY = "onboard";
     private static final String PASSWORD_KEY = "onboard";
     private static final String SUM_KEY = "sum";
+    private static final String PACIENT_KEY="pacient";
 
     private SharedPreferences preferences;
 
@@ -43,4 +47,15 @@ public class PreferencesManager {
     public int getSum() {
         return preferences.getInt(SUM_KEY,0);
     }
+     public void setPacient(CardPacient p){
+         Gson gson = new Gson();
+         String json = gson.toJson(p);
+         preferences.edit().putString(PACIENT_KEY, json).apply();
+     }
+     public CardPacient getPacient(){
+         Gson gson = new Gson();
+         String json = preferences.getString(PACIENT_KEY, "");
+         CardPacient pacient = gson.fromJson(json, CardPacient.class);
+         return pacient;
+     }
 }

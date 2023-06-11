@@ -73,7 +73,7 @@
             android:hint="\tОтчество"
             android:layout_marginBottom="24dp"/>
         <EditText
-            android:id="@+id/etEndName"
+            android:id="@+id/etFName"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/input"
