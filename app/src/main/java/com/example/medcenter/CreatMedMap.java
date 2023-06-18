@@ -3,6 +3,7 @@ package com.example.medcenter;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,14 +18,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.medcenter.ui.main.PreferencesManager;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class CreatMedMap extends AppCompatActivity implements View.OnClickListener {
 Spinner spFloors;
  Button btNext, btCreate;
  EditText etName,etSname,etFname,etAge;
  Calendar calendar;
- Date age;
+ String age;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -65,6 +66,8 @@ Spinner spFloors;
                             etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString());
             PreferencesManager manager=new PreferencesManager(this);
             manager.setPacient(pacient);
+            manager.setFoto(BitmapFactory.decodeResource(this.getResources(),
+                    R.drawable.img_foto));
             Toast.makeText(this,"Карта создана",Toast.LENGTH_LONG).show();
             Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
             startActivity(intent1);}else Toast.makeText(this,"Неверные данные",Toast.LENGTH_LONG).show();
@@ -80,7 +83,7 @@ Spinner spFloors;
                     etAge.setText(dayOfMonth + "." + (month + 1) + "." + year);
 
                     calendar.set(year, month, dayOfMonth);
-                    age = calendar.getTime();
+                    age = dayOfMonth + "." + (month + 1) + "." + year;
                 }
             }, year, month, dayOfMonth);
             datePickerDialog.show();
@@ -88,7 +91,7 @@ Spinner spFloors;
     }
 
 
-    public boolean Valid(String name, String fName, String sName, Date age, String pol){
+    public boolean Valid(String name, String fName, String sName, String age, String pol){
         if (name!="" && fName!="" && sName!="" && age!=null && pol!=""){
             return true;
         }

@@ -3,6 +3,9 @@ package com.example.medcenter;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,17 +13,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.medcenter.ui.main.PreferencesManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Calendar;
-import java.util.Date;
 
 public class MainProfile extends AppCompatActivity {
 PreferencesManager manager;
@@ -28,7 +34,10 @@ PreferencesManager manager;
     Button  btCreate;
     EditText etName,etSname,etFname,etAge;
     Calendar calendar;
-    Date age;
+    Bitmap selectedImage;
+    String age;
+    ImageView imgFoto;
+    private final int Pick_image = 1;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +47,7 @@ PreferencesManager manager;
         BottomNavigationView bottomNavigationView=findViewById(R.id.bottom_navigation);
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.main_profile);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -67,18 +77,55 @@ PreferencesManager manager;
                 ArrayAdapter.createFromResource(this, R.array.floors,
                         android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Вызываем адаптер
+        // Вызываем адаптер
         spFloors.setAdapter(adapter);
+        imgFoto=findViewById(R.id.imgFoto);
+        imgFoto.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.img_foto));
 
 
         if(manager.isPacient()==true){
             CardPacient pacient=manager.getPacient();
+           // imgFoto.setImageBitmap(manager.getFoto());
             etSname.setText(pacient.secondName);
             etFname.setText(pacient.firstName);
             etName.setText(pacient.name);
-            etAge.setText(pacient.age.toString());
+            etAge.setText(pacient.age);
             if(pacient.pol=="Мужской") spFloors.setSelection(0);
             else spFloors.setSelection(1);
+        }
+
+        imgFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                //Тип получаемых объектов - image:
+                photoPickerIntent.setType("image/*");
+                //Запускаем переход с ожиданием обратного результата в виде информации об изображении:
+                startActivityForResult(photoPickerIntent, Pick_image);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+            case Pick_image:
+                if(resultCode == RESULT_OK) {
+                    try {
+
+                        //Получаем URI изображения, преобразуем его в Bitmap
+                        //объект и отображаем в элементе ImageView нашего интерфейса:
+                        final Uri imageUri = data.getData();
+                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                        selectedImage = BitmapFactory.decodeStream(imageStream);
+                        imgFoto.setImageBitmap(selectedImage);
+                        imgFoto.setRotation(90);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
         }
     }
 
@@ -87,7 +134,7 @@ PreferencesManager manager;
             if( Valid(etName.getText().toString(),
                 etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString())) {
             CardPacient pacient = new CardPacient(etName.getText().toString(),
-                    etFname.getText().toString(), etSname.getText().toString(), age, spFloors.getSelectedItem().toString());
+                    etFname.getText().toString(), etSname.getText().toString(), age, spFloors.getSelectedItem().toString(), selectedImage);
             PreferencesManager manager = new PreferencesManager(this);
             manager.setPacient(pacient);
             Toast.makeText(this, "Карта создана", Toast.LENGTH_LONG).show();
@@ -95,7 +142,7 @@ PreferencesManager manager;
         }
 
         if(view.getId()==R.id.etAge) {
-            int year = calendar.get(Calendar.YEAR);
+           try{ int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(MainProfile.this, new DatePickerDialog.OnDateSetListener() {
@@ -104,13 +151,16 @@ PreferencesManager manager;
                     etAge.setText(dayOfMonth + "." + (month + 1) + "." + year);
 
                     calendar.set(year, month, dayOfMonth);
-                    age = calendar.getTime();
+                    age = dayOfMonth + "." + (month + 1) + "." + year;
                 }
             }, year, month, dayOfMonth);
-            datePickerDialog.show();
+            datePickerDialog.show();}
+           catch (Exception exception){
+               Toast.makeText(this,exception.toString(),Toast.LENGTH_LONG).show();
+           }
         }
     }
-    public boolean Valid(String name, String fName, String sName, Date age, String pol){
+    public boolean Valid(String name, String fName, String sName, String age, String pol){
         if (name!="" && fName!="" && sName!="" && age!=null && pol!=""){
             return true;
         }
