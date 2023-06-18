@@ -20,7 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main_analis extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener , CardAnalisAdapter.OnCardClickListener {
+public class Main_analis extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, CardAnalisAdapter.OnCardClickListener, View.OnClickListener {
     RecyclerView recyclerView;
     ViewPager viewPager;
     Button bt1,bt2,bt3,myButton;
@@ -142,7 +142,15 @@ Boolean buttonIsCreated=false;
         else sum=-cost;
 
         price+=sum;
-        preferencesManager.setSum(sum);
+        ;
         myButton.setText("В корзину\t\t\t"+price);
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preferencesManager.setSum(price);
+                Intent intent=new Intent(Main_analis.this, ActivityKorzina.class);
+                startActivity(intent);
+            }
+        });
         }
 }
