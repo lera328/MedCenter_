@@ -13,29 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CardAnalisAdapter extends RecyclerView.Adapter<CardAnalisAdapter.ViewHolder> {
+public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapterNew.ViewHolder> {
 
-    private List<cardAnalisModel> cardList;
-
+    private List<Analis> analisList;
     Context context;
-    private OnCardClickListener onCardClickListener;
-    public interface OnCardClickListener {
-        void onCardClick(int position,int cost, String text);
-    }
-
-    public CardAnalisAdapter(List<cardAnalisModel> cardList, Context context, OnCardClickListener onCardClickListener) {
-        this.cardList = cardList;
-        this.context = context;
-        this.onCardClickListener = onCardClickListener;
-    }
-
-
-
-
-
-    public CardAnalisAdapter(List<cardAnalisModel> cardList) {
-        this.cardList = cardList;
-    }
+    private cardAnalisAdapterNew.OnCardClickListener onCardClickListenerNew;
 
     @NonNull
     @Override
@@ -46,35 +28,47 @@ public class CardAnalisAdapter extends RecyclerView.Adapter<CardAnalisAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        cardAnalisModel model = cardList.get(position);
-        holder.tvTitle.setText(model.getTitle());
-        holder.tvTime.setText(String.valueOf(model.getTime()));
-        holder.tvPrice.setText(String.valueOf(model.getCost()));
+
+        Analis analis=analisList.get(position);
+        holder.tvTitle.setText(analis.getName());
+        holder.tvTime.setText(analis.getTime_result());
+        holder.tvPrice.setText(analis.getPrice());
         holder.buttonGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Button bt=(Button) v;
                 if(bt.getText().equals("Добавить")) {
 
-                    if (onCardClickListener != null) {bt.setText("Убрать");
-                    onCardClickListener.onCardClick(position,Integer.valueOf(model.cost),String.valueOf(bt.getText()));
-                        }
-                        }
+                    if (onCardClickListenerNew != null) {bt.setText("Убрать");
+                        onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()));
+                    }
+                }
                 else {
-                    if (onCardClickListener != null) {bt.setText("Добавить");
+                    if (onCardClickListenerNew != null) {bt.setText("Добавить");
 
-                    onCardClickListener.onCardClick(position,Integer.valueOf(model.cost),String.valueOf(bt.getText()));
-                        }
-                        }
-
+                        onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()));
+                    }
+                }
             }
         });
+
     }
 
     @Override
     public int getItemCount() {
-        return cardList.size();
+        return analisList.size();
+    }
+
+    public interface OnCardClickListener{
+
+
+        void onCardClickNew(int position, int cost, String text);
+    }
+
+    public cardAnalisAdapterNew(List<Analis> analisList, Context context, cardAnalisAdapterNew.OnCardClickListener onCardClickListener) {
+        this.analisList = analisList;
+        this.context = context;
+        this.onCardClickListenerNew = onCardClickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -93,3 +87,8 @@ public class CardAnalisAdapter extends RecyclerView.Adapter<CardAnalisAdapter.Vi
         }
     }
 }
+   ///
+
+
+
+

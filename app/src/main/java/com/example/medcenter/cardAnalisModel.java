@@ -1,13 +1,37 @@
 package com.example.medcenter;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class cardAnalisModel implements Serializable {
-    private String title;
-    String time;
-    String cost;
-    int price;
 
+    @SerializedName("id")
+    private int id;
+    @SerializedName("name")
+    private String title;
+    @SerializedName("description")
+    String Description;
+    @SerializedName("price")
+    String cost;
+    @SerializedName("category")
+    private String category;
+    @SerializedName("time_result")
+    String time;
+
+    @SerializedName("preparation")
+    private String preparation;
+
+    @SerializedName("bio")
+    private String bio;
+
+
+    public cardAnalisModel(String tit, String tim, String c) {
+
+        this.title= tit;
+        this.time= tim;
+        this.cost= c;
+    }
 
     public cardAnalisModel(String tit, int tim, int c) {
         String s="";
@@ -16,8 +40,7 @@ public class cardAnalisModel implements Serializable {
         if(tim%10>4 ||(tim>4 && tim<21)) s=" дней";
         this.title= tit;
         this.time= String.valueOf(tim)+s;
-        this.cost= String.valueOf(c)+"₽";
-        this.price=c;
+        this.cost= String.valueOf(c);
     }
 
     public String getTitle() {
@@ -48,5 +71,21 @@ public class cardAnalisModel implements Serializable {
     public String toString()  {
 
         return this.title+"\n"+ this.time+"\n"+this.cost;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setPreparation(String preparation) {
+        this.preparation = preparation;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
