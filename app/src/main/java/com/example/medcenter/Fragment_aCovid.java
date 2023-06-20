@@ -97,7 +97,7 @@ RecyclerView recyclerView;
                     }
 
                     cardAnalisAdapterNew adapter = new cardAnalisAdapterNew(analisList, getActivity(), (cardAnalisAdapterNew.OnCardClickListener) getActivity());
-                    recyclerView = v.findViewById(R.id.recyclerView1);
+                    recyclerView = v.findViewById(R.id.recyclerView2);
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
                     recyclerView.setAdapter(adapter);
                 }

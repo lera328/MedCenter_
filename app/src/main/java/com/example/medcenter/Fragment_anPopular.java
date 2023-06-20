@@ -96,7 +96,7 @@ public class Fragment_anPopular extends Fragment {
                     }
 
                     cardAnalisAdapterNew adapter = new cardAnalisAdapterNew(analisList, getActivity(), (cardAnalisAdapterNew.OnCardClickListener) getActivity());
-                    recyclerView = v.findViewById(R.id.recyclerView1);
+                    recyclerView = v.findViewById(R.id.recyclerView2);
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
                     recyclerView.setAdapter(adapter);
                 }
@@ -130,7 +130,7 @@ public class Fragment_anPopular extends Fragment {
         //cardList.add(new cardAnalisModel("Клинический анализ крови с лейкоцитарной формулировкой", 1,690));
         //cardList.add(new cardAnalisModel("Биохимический анализ крови, базовый", 1,2440));
         //cardList.add(new cardAnalisModel("СОЭ (венозная кровь)", 1,240));
-        //CardAnalisAdapter adapter = new CardAnalisAdapter( cardList,getActivity(), (CardAnalisAdapter.OnCardClickListener) getActivity());
+        //CardAdapterKorzina adapter = new CardAdapterKorzina( cardList,getActivity(), (CardAdapterKorzina.OnCardClickListener) getActivity());
 
        //Analis analis=new Analis(1,"jlk","jlkj","50","ghvhbj","ygjh","gjh","kgjh");
        //analisList.add(analis);

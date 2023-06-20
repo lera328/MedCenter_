@@ -106,7 +106,7 @@ public class Analis implements Serializable {
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvPrice = itemView.findViewById(R.id.tvPrice);
-            buttonGet = itemView.findViewById(R.id.buttonGet);
+            buttonGet = itemView.findViewById(R.id.btPlus);
         }
     }
 }

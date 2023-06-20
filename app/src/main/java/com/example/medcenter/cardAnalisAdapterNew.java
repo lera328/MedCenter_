@@ -19,6 +19,8 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
     Context context;
     private cardAnalisAdapterNew.OnCardClickListener onCardClickListenerNew;
 
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,16 +39,19 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
             @Override
             public void onClick(View v) {
                 Button bt=(Button) v;
+                DbHelperK dbHelperK=new DbHelperK(v.getContext());
                 if(bt.getText().equals("Добавить")) {
 
                     if (onCardClickListenerNew != null) {bt.setText("Убрать");
-                        onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()));
+                        dbHelperK.addNewInsult(analis.getName(),Integer.valueOf(analis.getPrice()));
+
+                        onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()), analis.getName());
                     }
                 }
                 else {
                     if (onCardClickListenerNew != null) {bt.setText("Добавить");
-
-                        onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()));
+                        dbHelperK.deleteRow(analis.getName());
+                        onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()), analis.getName());
                     }
                 }
             }
@@ -62,10 +67,10 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
     public interface OnCardClickListener{
 
 
-        void onCardClickNew(int position, int cost, String text);
+        void onCardClickNew(int position, int cost, String text, String name);
     }
 
-    public cardAnalisAdapterNew(List<Analis> analisList, Context context, cardAnalisAdapterNew.OnCardClickListener onCardClickListener) {
+    public cardAnalisAdapterNew(List<Analis> analisList, Context context, OnCardClickListener onCardClickListener) {
         this.analisList = analisList;
         this.context = context;
         this.onCardClickListenerNew = onCardClickListener;
@@ -83,7 +88,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
             tvTitle = itemView.findViewById(R.id.tvTitle);
             tvTime = itemView.findViewById(R.id.tvTime);
             tvPrice = itemView.findViewById(R.id.tvPrice);
-            buttonGet = itemView.findViewById(R.id.buttonGet);
+            buttonGet = itemView.findViewById(R.id.btPlus);
         }
     }
 }

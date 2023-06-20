@@ -26,6 +26,7 @@ public class Main_analis extends AppCompatActivity implements BottomNavigationVi
     Button bt1,bt2,bt3,myButton;
     int price;
     PreferencesManager preferencesManager;
+    DbHelperK dbHelperK;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Main_analis extends AppCompatActivity implements BottomNavigationVi
 
         preferencesManager=new PreferencesManager(this);
 
+        dbHelperK=new DbHelperK(this);
 
 
 
@@ -73,7 +75,7 @@ public class Main_analis extends AppCompatActivity implements BottomNavigationVi
         cardList.add(new cardBanerModel("Чек-ап для мужчин", "9 исследований", "8000 ₽ ",getResources().getDrawable(R.drawable.img_baner1)));
         CardBanerAdapter adapter = new CardBanerAdapter(cardList,getApplicationContext());
 
-        recyclerView = findViewById(R.id.recyclerView1);
+        recyclerView = findViewById(R.id.recyclerView2);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
 
@@ -116,46 +118,10 @@ public class Main_analis extends AppCompatActivity implements BottomNavigationVi
 Boolean buttonIsCreated=false;
 
 
-   // public void onCardClick(int position,int cost,String text) {
-//
-//
-   //     if(!buttonIsCreated){
-   //         myButton= new Button(this);
-   //         LinearLayout layout=findViewById(R.id.layout_k);
-   //         LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-   //                 LinearLayout.LayoutParams.WRAP_CONTENT);
-   //         params.setMargins(20,24,20,24);
-   //         myButton.setLayoutParams(params);
-   //         myButton.setBackground(getDrawable(R.drawable.button_blue));
-   //         myButton.setTextColor(getResources().getColor(R.color.white));
-   //         myButton.setAllCaps(false);
-   //         myButton.setGravity(View.TEXT_ALIGNMENT_CENTER);
-   //         layout.addView(myButton);
-   //         price=preferencesManager.getSum();
-   //         buttonIsCreated=true;
-   //     }
-//
-   //     int sum=0;
-   //     if(text=="Убрать"){
-   //         sum=cost;
-   //     }
-   //     else sum=-cost;
-//
-   //     price+=sum;
-   //     ;
-   //     myButton.setText("В корзину\t\t\t"+price);
-   //     myButton.setOnClickListener(new View.OnClickListener() {
-   //         @Override
-   //         public void onClick(View v) {
-   //             preferencesManager.setSum(price);
-   //             Intent intent=new Intent(Main_analis.this, ActivityKorzina.class);
-   //             startActivity(intent);
-   //         }
-   //     });
-   //     }
+
 
     @Override
-    public void onCardClickNew(int position, int cost, String text) {
+    public void onCardClickNew(int position, int cost, String text, String name) {
         if(!buttonIsCreated){
             myButton= new Button(this);
             LinearLayout layout=findViewById(R.id.layout_k);
@@ -168,18 +134,22 @@ Boolean buttonIsCreated=false;
             myButton.setAllCaps(false);
             myButton.setGravity(View.TEXT_ALIGNMENT_CENTER);
             layout.addView(myButton);
-            price=preferencesManager.getSum();
+            //price=preferencesManager.getSum();
             buttonIsCreated=true;
         }
 
         int sum=0;
         if(text=="Убрать"){
-            sum=cost;
-        }
-        else sum=-cost;
+            sum=dbHelperK.Sum();
 
-        price+=sum;
-        ;
+        }
+        else{
+            sum=dbHelperK.Sum();
+            //dbHelperK.deleteRow(name);
+        }
+
+        price=dbHelperK.Sum();
+
         myButton.setText("В корзину\t\t\t"+price);
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
