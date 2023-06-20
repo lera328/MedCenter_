@@ -1,5 +1,6 @@
 package com.example.medcenter;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,6 +84,7 @@ public class Fragment_anPopular extends Fragment {
         InterfaceApi interfaceApi=retrofit.create(InterfaceApi.class);
         Call<List<Analis>> call=interfaceApi.getListAnalises();
         call.enqueue(new Callback<List<Analis>>() {
+            @SuppressLint("SuspiciousIndentation")
             @Override
             public void onResponse(Call<List<Analis>> call, Response<List<Analis>> response) {
                 if (response.isSuccessful())

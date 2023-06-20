@@ -1,11 +1,24 @@
 package com.example.medcenter;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,11 +66,47 @@ public class Fragment_anComplex extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
+RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_an_complex, container, false);
+        View v= inflater.inflate(R.layout.fragment_an_complex, container, false);
+
+        List<Analis> analisList = new ArrayList();
+
+        String base_url="https://medic.madskill.ru/api/";
+        ///
+        Retrofit retrofit=new Retrofit.Builder()
+                .baseUrl(base_url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        InterfaceApi interfaceApi=retrofit.create(InterfaceApi.class);
+        Call<List<Analis>> call=interfaceApi.getListAnalises();
+        call.enqueue(new Callback<List<Analis>>() {
+            @SuppressLint("MissingInflatedId")
+            @Override
+            public void onResponse(Call<List<Analis>> call, Response<List<Analis>> response) {
+                if (response.isSuccessful())
+                {
+                    List<Analis> analisResponseList = response.body();
+                    for (Analis analis: analisResponseList){
+                        if (analis.getCategory().contains("ЗОЖ") || analis.getCategory().contains("Онкогенетические"))
+                            analisList.add(analis);
+                    }
+
+                    cardAnalisAdapterNew adapter = new cardAnalisAdapterNew(analisList, getActivity(), (cardAnalisAdapterNew.OnCardClickListener) getActivity());
+                    recyclerView = v.findViewById(R.id.recyclerView1);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Analis>> call, Throwable t) {
+                Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        return v;
     }
 }
