@@ -3,7 +3,6 @@ package com.example.medcenter;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,8 +14,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.medcenter.ui.main.PreferencesManager;
-
 import java.util.Calendar;
 
 public class CreatMedMap extends AppCompatActivity implements View.OnClickListener {
@@ -25,6 +22,7 @@ Spinner spFloors;
  EditText etName,etSname,etFname,etAge;
  Calendar calendar;
  String age;
+ DbHelperK dbHelperK;
 
 
     @SuppressLint("MissingInflatedId")
@@ -33,6 +31,7 @@ Spinner spFloors;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_med_map);
 
+        dbHelperK=new DbHelperK(this);
         spFloors=findViewById(R.id.spinner);
         ArrayAdapter<?> adapter =
                 ArrayAdapter.createFromResource(this, R.array.floors,
@@ -61,13 +60,12 @@ Spinner spFloors;
         Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
         startActivity(intent1);}
         if(view.getId()==R.id.buttonCreate){if( Valid(etName.getText().toString(),
-                etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString())){
+                etFname.getText().toString(),etSname.getText().toString(),
+                age,spFloors.getSelectedItem().toString())){
             CardPacient pacient=new CardPacient(etName.getText().toString(),
                             etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString());
-            PreferencesManager manager=new PreferencesManager(this);
-            manager.setPacient(pacient);
-            manager.setFoto(BitmapFactory.decodeResource(this.getResources(),
-                    R.drawable.img_foto));
+            dbHelperK.addNewPerson(etName.getText().toString(),
+                    etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString(),null);
             Toast.makeText(this,"Карта создана",Toast.LENGTH_LONG).show();
             Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
             startActivity(intent1);}else Toast.makeText(this,"Неверные данные",Toast.LENGTH_LONG).show();

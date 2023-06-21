@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -37,6 +38,7 @@ PreferencesManager manager;
     Bitmap selectedImage;
     String age;
     ImageView imgFoto;
+    DbHelperK dbHelperK;
     private final int Pick_image = 1;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -48,6 +50,7 @@ PreferencesManager manager;
         // Set Home selected
         bottomNavigationView.setSelectedItemId(R.id.main_profile);
 
+        dbHelperK=new DbHelperK(this);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
             @Override
@@ -83,16 +86,27 @@ PreferencesManager manager;
         imgFoto.setImageBitmap(BitmapFactory.decodeResource(this.getResources(), R.drawable.img_foto));
 
 
-        if(manager.isPacient()==true){
-            CardPacient pacient=manager.getPacient();
-           // imgFoto.setImageBitmap(manager.getFoto());
-            etSname.setText(pacient.secondName);
-            etFname.setText(pacient.firstName);
-            etName.setText(pacient.name);
-            etAge.setText(pacient.age);
-            if(pacient.pol=="Мужской") spFloors.setSelection(0);
+       //if(manager.isPacient()==true){
+       //    CardPacient pacient=manager.getPacient();
+       //   // imgFoto.setImageBitmap(manager.getFoto());
+       //    etSname.setText(pacient.getSecondName());
+       //    etFname.setText(pacient.getFirstName());
+       //    etName.setText(pacient.getName());
+       //    etAge.setText(pacient.getAge());
+       //    if(pacient.getPol()=="Мужской") spFloors.setSelection(0);
+       //    else spFloors.setSelection(1);
+       //}
+        CardPacient pacient=dbHelperK.getPacient();
+        if(pacient!=null){
+            etSname.setText(pacient.getSecondName());
+            etFname.setText(pacient.getFirstName());
+            etName.setText(pacient.getName());
+            etAge.setText(pacient.getAge());
+            if(pacient.getPol()=="Мужской") spFloors.setSelection(0);
             else spFloors.setSelection(1);
+            if(pacient.getFoto()!=null){imgFoto.setImageBitmap(Utilities.getImage(pacient.getFoto()));}
         }
+
 
         imgFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,31 +148,39 @@ PreferencesManager manager;
             if( Valid(etName.getText().toString(),
                 etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString())) {
             CardPacient pacient = new CardPacient(etName.getText().toString(),
-                    etFname.getText().toString(), etSname.getText().toString(), age, spFloors.getSelectedItem().toString(), selectedImage);
-            PreferencesManager manager = new PreferencesManager(this);
-            manager.setPacient(pacient);
+                    etFname.getText().toString(), etSname.getText().toString(), age,
+                    spFloors.getSelectedItem().toString(), Utilities.getBytes(selectedImage));
+
+            dbHelperK.deleteAllPerson();
+            dbHelperK.addNewPerson(etName.getText().toString(),
+                    etFname.getText().toString(), etSname.getText().toString(), age,
+                    spFloors.getSelectedItem().toString(), Utilities.getBytes(selectedImage));
+
+
             Toast.makeText(this, "Карта создана", Toast.LENGTH_LONG).show();
         }
         }
 
-        if(view.getId()==R.id.etAge) {
-           try{ int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(MainProfile.this, new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    etAge.setText(dayOfMonth + "." + (month + 1) + "." + year);
+       if(view.getId()==R.id.etAge) {
+           calendar=Calendar.getInstance();
+          try{ int year = calendar.get(Calendar.YEAR);
+           int month = calendar.get(Calendar.MONTH);
+           int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+           DatePickerDialog datePickerDialog = new DatePickerDialog(MainProfile.this, new DatePickerDialog.OnDateSetListener() {
+               @Override
+               public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                   etAge.setText(dayOfMonth + "." + (month + 1) + "." + year);
 
-                    calendar.set(year, month, dayOfMonth);
-                    age = dayOfMonth + "." + (month + 1) + "." + year;
-                }
-            }, year, month, dayOfMonth);
-            datePickerDialog.show();}
-           catch (Exception exception){
-               Toast.makeText(this,exception.toString(),Toast.LENGTH_LONG).show();
-           }
-        }
+                   calendar.set(year, month, dayOfMonth);
+                   age = dayOfMonth + "." + (month + 1) + "." + year;
+               }
+           }, year, month, dayOfMonth);
+           datePickerDialog.show();}
+          catch (Exception exception){
+              Toast.makeText(this,exception.toString(),Toast.LENGTH_LONG).show();
+              Log.e("aaaa",exception.toString());
+          }
+       }
     }
     public boolean Valid(String name, String fName, String sName, String age, String pol){
         if (name!="" && fName!="" && sName!="" && age!=null && pol!=""){

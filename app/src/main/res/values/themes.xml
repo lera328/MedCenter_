@@ -15,4 +15,12 @@
     <style name="Theme.MedCenter.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.MedCenter.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+    </style>
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="background">@color/transporent</item>
+    </style>
 </resources>

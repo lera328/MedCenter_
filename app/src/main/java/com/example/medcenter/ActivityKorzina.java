@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,6 +21,7 @@ public class ActivityKorzina extends AppCompatActivity implements OnCardClickLis
 TextView tvSum;
 DbHelperK dbHelperK;
 ImageButton btBack, btDelAll;
+Button btGoToOformlenie;
     CardAdapterKorzina adapterKorzina;
 
     RecyclerView recyclerView;
@@ -49,6 +51,16 @@ ImageButton btBack, btDelAll;
         });
         btDelAll=findViewById(R.id.btDelAll);
         btDelAll.setOnClickListener(this);
+
+        btGoToOformlenie=findViewById(R.id.btGoToOfofrmlenie);
+        btGoToOformlenie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ActivityKorzina.this,
+                        ActivityOformlenieZ.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

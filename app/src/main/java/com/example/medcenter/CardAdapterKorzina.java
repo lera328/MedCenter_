@@ -56,7 +56,7 @@ public class CardAdapterKorzina extends RecyclerView.Adapter<CardAdapterKorzina.
             @Override
             public void onClick(View v) {
 
-                        dbHelperK.addNewInsult(model.getName(),model.getPrice());
+                        dbHelperK.addNewObject(model.getName(),model.getPrice());
                         int k=dbHelperK.ColObjects(model.getName());
                         holder.tvKol.setText(k +"");
                         onCardClickListener.onCardClick(model.getName(),true, model.getPrice());

@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.List;
 
@@ -43,7 +47,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                 if(bt.getText().equals("Добавить")) {
 
                     if (onCardClickListenerNew != null) {bt.setText("Убрать");
-                        dbHelperK.addNewInsult(analis.getName(),Integer.valueOf(analis.getPrice()));
+                        dbHelperK.addNewObject(analis.getName(),Integer.valueOf(analis.getPrice()));
 
                         onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()), analis.getName());
                     }
@@ -56,6 +60,58 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                 }
             }
         });
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbHelperK dbHelperK=new DbHelperK(v.getContext());
+                BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(context,
+                        R.style.BottomSheetDialogTheme);
+
+                View bottomSheetView=LayoutInflater.from(context)
+                                .inflate(R.layout.bottom_sheet_dialog,
+                                ((LinearLayout)v.findViewById(R.id.bottomSheetContainer))
+                                );
+
+                TextView title=bottomSheetView.findViewById(R.id.tvTitle);
+                title.setText(analis.getName());
+                TextView opisanie=bottomSheetView.findViewById(R.id.tvOpisanie);
+                opisanie.setText(analis.getDescription());
+                TextView podgotovka=bottomSheetView.findViewById(R.id.tvPodgotovka);
+                podgotovka.setText(analis.getPreparation());
+                TextView time=bottomSheetView.findViewById(R.id.tvKDay);
+                time.setText(analis.getTime_result());
+                TextView bio=bottomSheetView.findViewById(R.id.tvBiomaterial);
+                bio.setText(analis.getBio());
+                Button bg=bottomSheetView.findViewById(R.id.buttonGet);
+                bg.setText("Добавить за "+analis.getPrice()+" ₽");
+                bg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if(bg.getText()!="В корзину"){
+                            dbHelperK.addNewObject(analis.getName(),Integer.valueOf(analis.getPrice()));
+                            onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),
+                                    "Добавить", analis.getName());
+                            bg.setText("В корзину");
+                        }
+                        else {
+                            onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),
+                                    "В корзину", analis.getName());
+
+                        }
+                    }
+                });
+                bottomSheetView.findViewById(R.id.btClose).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+            }
+        });
+
 
     }
 
@@ -82,6 +138,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
         public TextView tvTime;
         public TextView tvPrice;
         public Button buttonGet;
+        public ConstraintLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +146,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
             tvTime = itemView.findViewById(R.id.tvTime);
             tvPrice = itemView.findViewById(R.id.tvPrice);
             buttonGet = itemView.findViewById(R.id.btPlus);
+            layout=itemView.findViewById(R.id.layoutc);
         }
     }
 }
