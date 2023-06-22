@@ -53,7 +53,7 @@
                 android:layout_marginTop="5sp"
                 android:ems="10"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="Введите ваш адрес"
                 android:background="@drawable/input"/>
             <TextView
                 android:id="@+id/textView23"
@@ -68,8 +68,9 @@
                 android:layout_height="50sp"
                 android:layout_marginTop="5sp"
                 android:ems="10"
+                android:focusable="false"
                 android:inputType="text"
-                android:text="Name"
+                android:hint="Выберите дату и время"
                 android:background="@drawable/input"/>
             <TextView
                 android:id="@+id/tvWho"
@@ -85,8 +86,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/receyler_pacient_analis"
+                android:background="@color/transporent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
+
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/btPlusPacient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Добавить еще пациента"
@@ -102,14 +110,17 @@
                 android:layout_marginTop="30sp"
                 android:text="Телефон*" />
 
-            <EditText
+            <com.santalu.maskara.widget.MaskEditText
                 android:id="@+id/etNumber"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_marginTop="5sp"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="Name"
+                android:inputType="number"
+                app:mask="+7 (___) - ___ - __ - __"
+                app:maskCharacter="_"
+                app:maskStyle="completable"
+                android:hint="Введите ваш номер телефона"
                 android:background="@drawable/input"/>
 
             <LinearLayout
@@ -138,7 +149,7 @@
             </LinearLayout>
 
             <EditText
-                android:id="@+id/editTextTextMultiLine"
+                android:id="@+id/etComent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -146,6 +157,7 @@
                 android:inputType="textMultiLine"
                 android:background="@drawable/input"
                 android:height="100sp"
+                android:hint="Можете оставить свои пожелания"
                 android:singleLine="false"/>
 
             <TableLayout
@@ -167,7 +179,8 @@
                     <ImageButton
                         android:background="@color/transporent"
                         android:scaleType="fitEnd"
-                        android:layout_height="20sp"
+                        android:layout_marginTop="5sp"
+                        android:layout_height="12sp"
                         android:id="@+id/imageButton3"
                        android:layout_width="wrap_content"
 
@@ -193,7 +206,8 @@
 
                         android:background="@color/transporent"
                         android:scaleType="fitEnd"
-                        android:layout_height="20sp"
+                        android:layout_marginTop="5sp"
+                        android:layout_height="12sp"
                         app:srcCompat="@drawable/img_next" />
                 </TableRow>
 

@@ -69,7 +69,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
 
                 View bottomSheetView=LayoutInflater.from(context)
                                 .inflate(R.layout.bottom_sheet_dialog,
-                                ((LinearLayout)v.findViewById(R.id.bottomSheetContainer))
+                                ((LinearLayout)v.findViewById(R.id.btOk))
                                 );
 
                 TextView title=bottomSheetView.findViewById(R.id.tvTitle);

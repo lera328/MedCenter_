@@ -23,6 +23,7 @@ Spinner spFloors;
  Calendar calendar;
  String age;
  DbHelperK dbHelperK;
+ int f=0;
 
 
     @SuppressLint("MissingInflatedId")
@@ -52,11 +53,16 @@ Spinner spFloors;
         etAge.setOnClickListener(this::onClick);
         calendar = Calendar.getInstance();
 
+        Intent intent=getIntent();
+        f=intent.getIntExtra("activity",0);
+
 
     }
 
     public void onClick(View view) {
         if(view.getId()==R.id.button){
+
+
         Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
         startActivity(intent1);}
         if(view.getId()==R.id.buttonCreate){if( Valid(etName.getText().toString(),
@@ -67,8 +73,16 @@ Spinner spFloors;
             dbHelperK.addNewPerson(etName.getText().toString(),
                     etFname.getText().toString(),etSname.getText().toString(),age,spFloors.getSelectedItem().toString(),null);
             Toast.makeText(this,"Карта создана",Toast.LENGTH_LONG).show();
+            if(f==1){
+                Intent intent1=new Intent(CreatMedMap.this,ActivityOformlenieZ.class);
+                intent1.putExtra("activity",1);
+                startActivity(intent1);
+            }
+            else {
             Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
-            startActivity(intent1);}else Toast.makeText(this,"Неверные данные",Toast.LENGTH_LONG).show();
+            startActivity(intent1);}
+        }
+        else Toast.makeText(this,"Неверные данные",Toast.LENGTH_LONG).show();
         }
 
         if(view.getId()==R.id.etAge) {

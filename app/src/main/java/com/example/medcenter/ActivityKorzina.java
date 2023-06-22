@@ -66,11 +66,6 @@ Button btGoToOformlenie;
     @Override
     public void onCardClick(String text, boolean f, int price) {
 
-        if(f){
-            //dbHelperK.addNewInsult(text,price);
-        }
-        //else dbHelperK.deleteRow(text);
-
         int sum=dbHelperK.Sum();
         tvSum.setText(sum+"" );
 
