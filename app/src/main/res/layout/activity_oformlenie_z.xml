@@ -11,97 +11,101 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="10sp"
-            >
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
             <ImageButton
                 android:id="@+id/btBack"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="@color/transporent"
                 app:srcCompat="@drawable/img_bt_back" />
 
             <TextView
                 android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10sp"
                 android:text="Оформление заказа"
-                android:textSize="24sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_marginTop="10sp"/>
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Адрес*"
-                android:layout_marginTop="20sp"/>
+                android:layout_marginTop="20sp"
+                android:text="Адрес*" />
 
             <EditText
                 android:id="@+id/etAdress"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_marginTop="5sp"
+                android:background="@drawable/input"
                 android:ems="10"
-                android:inputType="text"
                 android:hint="Введите ваш адрес"
-                android:background="@drawable/input"/>
+                android:inputType="text" />
+
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Дата и время*"
-                android:layout_marginTop="20sp"/>
+                android:layout_marginTop="20sp"
+                android:text="Дата и время*" />
 
             <EditText
                 android:id="@+id/etDateTime"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_marginTop="5sp"
+                android:background="@drawable/input"
                 android:ems="10"
                 android:focusable="false"
-                android:inputType="text"
                 android:hint="Выберите дату и время"
-                android:background="@drawable/input"/>
+                android:inputType="text" />
+
             <TextView
                 android:id="@+id/tvWho"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ntrcn"
-                android:layout_marginTop="20sp"/>
+                android:layout_marginTop="20sp"
+                android:text="ntrcn" />
 
             <Spinner
                 android:id="@+id/spinner2"
-                android:layout_marginTop="5sp"
-                android:background="@drawable/input"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:layout_marginTop="5sp"
+                android:background="@drawable/input" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/receyler_pacient_analis"
-                android:background="@color/transporent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/transporent"
                 android:visibility="invisible" />
 
             <Button
                 android:id="@+id/btPlusPacient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Добавить еще пациента"
                 android:layout_marginTop="10sp"
-                android:textColor="@color/ultra_blue"
+                android:background="@drawable/button_withborder"
+                android:text="Добавить еще пациента"
                 android:textAllCaps="false"
-                android:background="@drawable/button_withborder"/>
+                android:textColor="@color/ultra_blue" />
 
             <TextView
                 android:id="@+id/textView25"
@@ -115,20 +119,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_marginTop="5sp"
+                android:background="@drawable/input"
                 android:ems="10"
+                android:hint="Введите ваш номер телефона"
                 android:inputType="number"
                 app:mask="+7 (___) - ___ - __ - __"
                 app:maskCharacter="_"
-                app:maskStyle="completable"
-                android:hint="Введите ваш номер телефона"
-                android:background="@drawable/input"/>
+                app:maskStyle="completable" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
                 android:layout_marginTop="20sp"
-                android:layout_marginBottom="5sp">
+                android:layout_marginBottom="5sp"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/textView26"
@@ -141,9 +145,9 @@
                     android:id="@+id/btMicro"
                     android:layout_width="40dp"
                     android:layout_height="20dp"
-                    android:scaleType="fitEnd"
-                    android:background="@color/transporent"
                     android:layout_weight="1"
+                    android:background="@color/transporent"
+                    android:scaleType="fitEnd"
                     app:srcCompat="@drawable/img_micro" />
 
             </LinearLayout>
@@ -152,13 +156,13 @@
                 android:id="@+id/etComent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:height="100sp"
+                android:background="@drawable/input"
                 android:ems="10"
                 android:gravity="start|top"
-                android:inputType="textMultiLine"
-                android:background="@drawable/input"
-                android:height="100sp"
                 android:hint="Можете оставить свои пожелания"
-                android:singleLine="false"/>
+                android:inputType="textMultiLine"
+                android:singleLine="false" />
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -167,83 +171,82 @@
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent">
 
                     <TextView
                         android:id="@+id/textView31"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Оплата Apple Pay"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
 
                     <ImageButton
+                        android:id="@+id/imageButton3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="12sp"
+                        android:layout_marginTop="5sp"
                         android:background="@color/transporent"
                         android:scaleType="fitEnd"
-                        android:layout_marginTop="5sp"
-                        android:layout_height="12sp"
-                        android:id="@+id/imageButton3"
-                       android:layout_width="wrap_content"
 
                         app:srcCompat="@drawable/img_next" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_marginTop="15sp"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15sp">
 
                     <TextView
                         android:id="@+id/textView32"
 
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="Промокод"
-                        android:layout_marginRight="220dp"/>
+                        android:layout_marginRight="220dp"
+                        android:text="Промокод" />
 
                     <ImageButton
                         android:id="@+id/imageButton4"
                         android:layout_width="wrap_content"
 
+                        android:layout_height="12sp"
+                        android:layout_marginTop="5sp"
                         android:background="@color/transporent"
                         android:scaleType="fitEnd"
-                        android:layout_marginTop="5sp"
-                        android:layout_height="12sp"
                         app:srcCompat="@drawable/img_next" />
                 </TableRow>
 
                 <TableRow
-                    android:layout_marginTop="15sp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" >
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15sp">
 
                     <TextView
                         android:id="@+id/tvKolAnaliz"
                         android:layout_width="wrap_content"
-                        android:textColor="@color/black"
                         android:layout_height="wrap_content"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/tvPrice"
-                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView"
-                        />
+                        android:textColor="@color/black" />
                 </TableRow>
 
             </TableLayout>
 
             <Button
                 android:id="@+id/btGetZakaz"
-                android:layout_marginBottom="20sp"
-                android:layout_marginTop="10sp"
-                android:background="@drawable/button_blue"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Заказать" />
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="20sp"
+                android:background="@drawable/button_blue"
+                android:text="Заказать"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
 
         </LinearLayout>

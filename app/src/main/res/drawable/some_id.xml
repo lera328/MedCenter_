@@ -26,9 +26,9 @@
                     <gradient
                         android:type="linear"
                         android:startX="93.75"
-                        android:startY="406"
+                        android:startY="-70"
                         android:endX="281.25"
-                        android:endY="406"
+                        android:endY="100"
                         >
                         <item
                             android:color="#A1CAFF"
@@ -62,9 +62,9 @@
                     <gradient
                         android:type="linear"
                         android:startX="93.75"
-                        android:startY="406"
+                        android:startY="0"
                         android:endX="281.25"
-                        android:endY="406"
+                        android:endY="10"
                         >
                         <item
                             android:color="#74C8E4"
@@ -98,9 +98,9 @@
                     <gradient
                         android:type="linear"
                         android:startX="93.75"
-                        android:startY="406"
+                        android:startY="0"
                         android:endX="281.25"
-                        android:endY="406"
+                        android:endY="1"
                         >
                         <item
                             android:color="#0D6269F0"

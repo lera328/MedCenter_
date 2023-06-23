@@ -55,6 +55,10 @@ Spinner spFloors;
 
         Intent intent=getIntent();
         f=intent.getIntExtra("activity",0);
+        if(f==0 && dbHelperK.getPacient()!=null){
+            Intent intent1=new Intent(CreatMedMap.this,Main_analis.class);
+            startActivity(intent1);
+        }
 
 
     }

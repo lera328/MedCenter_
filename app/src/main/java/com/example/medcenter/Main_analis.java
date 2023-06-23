@@ -3,10 +3,12 @@ package com.example.medcenter;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +22,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main_analis extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener,  View.OnClickListener, cardAnalisAdapterNew.OnCardClickListener {
+public class Main_analis extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, View.OnClickListener, cardAnalisAdapterNew.OnCardClickListener, TextWatcher {
     RecyclerView recyclerView;
     ViewPager viewPager;
     Button bt1,bt2,bt3,myButton;
     int price;
     PreferencesManager preferencesManager;
     DbHelperK dbHelperK;
+    TextView tvFind;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,14 @@ public class Main_analis extends AppCompatActivity implements BottomNavigationVi
         preferencesManager=new PreferencesManager(this);
 
         dbHelperK=new DbHelperK(this);
+
+        tvFind=findViewById(R.id.find);
+        tvFind.addTextChangedListener(this);
+
+
+            myButton=findViewById(R.id.btVkorziny);
+            myButton.setText("В корзину\t\t\t\t\t\t\t\t\t\t\t\t"+dbHelperK.Sum()+" ₽");
+            if (dbHelperK.Sum()>0) myButton.setVisibility(View.VISIBLE);
 
 
 
@@ -61,6 +72,20 @@ public class Main_analis extends AppCompatActivity implements BottomNavigationVi
                 return true;
             }
         });
+////////////////////////////////////////////////////////////
+
+
+
+
+
+        myButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Main_analis.this, ActivityKorzina.class);
+                startActivity(intent);
+            }
+        });
+        /////////////////////////////nт МБ ОШИБКАААА
 
 
 
@@ -123,18 +148,6 @@ Boolean buttonIsCreated=false;
     @Override
     public void onCardClickNew(int position, int cost, String text, String name) {
         if(!buttonIsCreated){
-            myButton= new Button(this);
-            LinearLayout layout=findViewById(R.id.layout_k);
-            LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.setMargins(20,24,20,24);
-            myButton.setLayoutParams(params);
-            myButton.setBackground(getDrawable(R.drawable.button_blue));
-            myButton.setTextColor(getResources().getColor(R.color.white));
-            myButton.setAllCaps(false);
-            myButton.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            layout.addView(myButton);
-            //price=preferencesManager.getSum();
             buttonIsCreated=true;
         }
 
@@ -150,20 +163,33 @@ Boolean buttonIsCreated=false;
         if(text=="В корзину"){
             Intent intent=new Intent(Main_analis.this,ActivityKorzina.class);
             startActivity(intent);
-
         }
+        myButton.setText("В корзину\t\t\t\t\t\t\t\t\t\t\t\t"+dbHelperK.Sum()+" ₽");
+        if (dbHelperK.Sum()>0) myButton.setVisibility(View.VISIBLE);
+        else myButton.setVisibility(View.GONE);
 
 
-        price=dbHelperK.Sum();
 
-        myButton.setText("В корзину\t\t\t"+price);
-        myButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //preferencesManager.setSum(price);
-                Intent intent=new Intent(Main_analis.this, ActivityKorzina.class);
-                startActivity(intent);
-            }
-        });
+
+    }
+
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        //
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+        String text=s.toString();
+        //Fragment_anPopular.filterElements(text);
+    }
+
+
+
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
     }
 }

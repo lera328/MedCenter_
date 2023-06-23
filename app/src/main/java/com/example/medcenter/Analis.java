@@ -15,17 +15,17 @@ public class Analis implements Serializable {
     private String name;
     private String description;
     private String price;
-    private String category;
+    private Integer category;
     private String time_result;
     private String preparation;
     private String bio;
 
-    public Analis(int id,String name,String description, String price, String category, String time_result, String preparation, String bio){
+    public Analis(int id,String category,String name,String description, String price,  String time_result, String preparation, String bio){
         this.id=id;
         this.name=name;
         this.description=description;
         this.price=price;
-        this.category=category;
+        this.category=Integer.valueOf(category);
         this.time_result=time_result;
         this.preparation=preparation;
         this.bio=bio;
@@ -63,11 +63,11 @@ public class Analis implements Serializable {
     }
 
     public String getCategory() {
-        return category;
+        return category+"";
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category = Integer.valueOf(category);
     }
 
     public String getTime_result() {

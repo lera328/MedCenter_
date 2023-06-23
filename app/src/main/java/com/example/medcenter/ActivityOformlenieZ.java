@@ -9,8 +9,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +37,7 @@ import com.santalu.maskara.widget.MaskEditText;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ActivityOformlenieZ extends AppCompatActivity implements AdapterForAddPerson.OnItemClickListener{
     Button btGetZakaz, btPlusPerson;
@@ -58,13 +63,107 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
         tvWho.setText(Html.fromHtml(t));
         btGetZakaz=findViewById(R.id.btGetZakaz);
         btGetZakaz.setEnabled(false);
+        btGetZakaz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ActivityOformlenieZ.this,ActivityEnd.class);
+                startActivity(intent);
+            }
+        });
         etDateTime=findViewById(R.id.etDateTime);
         etAdress=findViewById(R.id.etAdress);
         etNumber=findViewById(R.id.etNumber);
+        etComent=findViewById(R.id.etComent);
         btPlusPerson=findViewById(R.id.btPlusPacient);
         recyclerView_pacient_analis=findViewById(R.id.receyler_pacient_analis);
         Intent intent=getIntent();
 
+        tvKolAnalis=findViewById(R.id.tvKolAnaliz);
+        tvSumAnalis=findViewById(R.id.tvPrice);
+
+
+        checkPermission();
+        final SpeechRecognizer mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+
+
+        final Intent mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
+                Locale.getDefault());
+        mSpeechRecognizer.setRecognitionListener(new RecognitionListener() {
+            @Override
+            public void onReadyForSpeech(Bundle params) {
+
+            }
+
+            @Override
+            public void onBeginningOfSpeech() {
+
+            }
+
+            @Override
+            public void onRmsChanged(float rmsdB) {
+
+            }
+
+            @Override
+            public void onBufferReceived(byte[] buffer) {
+
+            }
+
+            @Override
+            public void onEndOfSpeech() {
+
+            }
+
+            @Override
+            public void onError(int error) {
+
+            }
+
+            @Override
+            public void onResults(Bundle results) {
+//getting all the matches
+                ArrayList<String> matches = results
+                        .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+
+                //displaying the first match
+                if (matches != null)
+                    etComent.setText(matches.get(0));
+            }
+
+            @Override
+            public void onPartialResults(Bundle partialResults) {
+
+            }
+
+            @Override
+            public void onEvent(int eventType, Bundle params) {
+
+            }
+        });
+
+        btMicro=findViewById(R.id.btMicro);
+        btMicro.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        mSpeechRecognizer.stopListening();
+                        //when the user removed the finger
+                        //etComent.setHint("You will see input here");
+                        break;
+
+                    case MotionEvent.ACTION_DOWN:
+                        mSpeechRecognizer.startListening(mSpeechRecognizerIntent);
+                        //finger is on the button
+                        etComent.setHint("Говорите...");
+                        break;
+                }
+                return false;
+            }
+        });
         if(intent.getIntExtra("activity",0)==1){
             btPlusPerson.performClick();
         }
@@ -144,6 +243,8 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
         });
 
         dbHelperK=new DbHelperK(this);
+        tvKolAnalis.setText(dbHelperK.ColObjects()+" анализ(-а/-ов)");
+        tvSumAnalis.setText(dbHelperK.Sum()+" ₽");
         List<CardPacient> pacientList=dbHelperK.getPersonList();
         List<String> spinnerPacientList = new ArrayList<>();
         for (CardPacient pacient : pacientList) {
@@ -209,6 +310,7 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
                         adapter_person_analis.notifyDataSetChanged();
                         spinnerPerson.setVisibility(View.GONE);
                         bottomSheetDialog.dismiss();
+                        btGetZakaz.setEnabled(true);
 
 
                         ////////////

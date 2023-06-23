@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.medcenter.ui.main.PreferencesManager;
 
 public class EdPassword extends AppCompatActivity implements View.OnClickListener {
 ImageView point1, point2, point3,point4;
@@ -19,6 +22,11 @@ String pass="";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ed_password);
+        PreferencesManager pm=new PreferencesManager(this);
+        if (pm.isSetPassword()!=0){
+            TextView tv=findViewById(R.id.textView7);
+            tv.setText("Введите пароль");
+        }
         point1=findViewById(R.id.point1);
         point2=findViewById(R.id.point2);
         point3=findViewById(R.id.point3);
@@ -74,9 +82,20 @@ String pass="";
             }
         }
         if(pass.length()==4) {
+
+            PreferencesManager preferencesManager=new PreferencesManager(this);
+            if(preferencesManager.isSetPassword()==0){
+            preferencesManager.setPassword(Integer.parseInt(String.valueOf(pass)));
             Toast.makeText(getApplicationContext(), "пароль сохранен!", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, CreatMedMap.class);
-            startActivity(intent);
+            startActivity(intent);}
+            else {
+                if(preferencesManager.isSetPassword()==Integer.parseInt(String.valueOf(pass)))
+                {Intent intent = new Intent(this, CreatMedMap.class);
+                startActivity(intent);
+                }
+                else Toast.makeText(this,"Неверный пароль!",Toast.LENGTH_LONG);
+            }
         }
 
 

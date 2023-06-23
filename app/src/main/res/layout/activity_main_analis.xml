@@ -100,29 +100,35 @@
     </LinearLayout>
 
 
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp"
-
+android:layout_marginBottom="10sp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/btVkorziny"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
     </androidx.viewpager.widget.ViewPager>
 
-    <LinearLayout
-        android:background="@drawable/border"
-        android:id="@+id/layout_k"
-        android:layout_width="406dp"
-        android:layout_height="0dp"
-
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/vp"
+    <Button
+        android:id="@+id/btVkorziny"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/button_blue"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

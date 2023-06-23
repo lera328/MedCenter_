@@ -76,24 +76,27 @@ RecyclerView recyclerView;
 
         List<Analis> analisList = new ArrayList();
 
-        String base_url="https://medic.madskill.ru/api/";
+        //String base_url="https://medic.madskill.ru/api/";
+        String base_url= "https://5cad-95-189-162-4.ngrok-free.app/api/";
         ///
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         InterfaceApi interfaceApi=retrofit.create(InterfaceApi.class);
-        Call<List<Analis>> call=interfaceApi.getListAnalises();
-        call.enqueue(new Callback<List<Analis>>() {
+        Call<AnalisResult> call=interfaceApi.getListAnalises();
+        call.enqueue(new Callback<AnalisResult>() {
             @SuppressLint("MissingInflatedId")
             @Override
-            public void onResponse(Call<List<Analis>> call, Response<List<Analis>> response) {
+            public void onResponse(Call<AnalisResult> call, Response<AnalisResult> response) {
                 if (response.isSuccessful())
                 {
-                    List<Analis> analisResponseList = response.body();
+
+                    List<Analis> analisResponseList = response.body().getAnalyses();
                     for (Analis analis: analisResponseList){
-                        if (analis.getCategory().contains("COVID"))
-                            analisList.add(analis);
+
+                        analis.setPrice(analis.getPrice().replace(".00",""));
+                        if (analis.getCategory().contains("2"))  analisList.add(analis);
                     }
 
                     cardAnalisAdapterNew adapter = new cardAnalisAdapterNew(analisList, getActivity(), (cardAnalisAdapterNew.OnCardClickListener) getActivity());
@@ -104,7 +107,7 @@ RecyclerView recyclerView;
             }
 
             @Override
-            public void onFailure(Call<List<Analis>> call, Throwable t) {
+            public void onFailure(Call<AnalisResult> call, Throwable t) {
                 Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });

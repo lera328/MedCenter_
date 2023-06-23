@@ -11,6 +11,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="base_url">https://5cad-95-189-162-4.ngrok-free.app/api/</string>
     <string name="prevMedMap">Без карты пациента вы не сможете заказать анализы.\n\nВ картах пациентов будут храниться результаты\nанализов вас и ваших близких.</string>
     <string-array name="floors">
         <item>Мужской</item>

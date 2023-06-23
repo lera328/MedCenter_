@@ -32,6 +32,10 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
         return new ViewHolder(view);
     }
 
+    public List<Analis> getAnalisList() {
+        return analisList;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
@@ -43,7 +47,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
             @Override
             public void onClick(View v) {
                 Button bt=(Button) v;
-                DbHelperK dbHelperK=new DbHelperK(v.getContext());
+                DbHelperK dbHelperK=new DbHelperK(v.getContext()); /// МБ ОШИБКААААААА.
                 if(bt.getText().equals("Добавить")) {
 
                     if (onCardClickListenerNew != null) {bt.setText("Убрать");
@@ -58,6 +62,7 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                         onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()), analis.getName());
                     }
                 }
+                if (dbHelperK.ColObjects(analis.getName())>0)bt.setText("Убрать");
             }
         });
         holder.layout.setOnClickListener(new View.OnClickListener() {
@@ -111,8 +116,6 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                 bottomSheetDialog.show();
             }
         });
-
-
     }
 
     @Override
