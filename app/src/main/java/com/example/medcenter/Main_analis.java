@@ -151,15 +151,7 @@ Boolean buttonIsCreated=false;
             buttonIsCreated=true;
         }
 
-        int sum=0;
-        if(text=="Убрать"){
-            sum=dbHelperK.Sum();
 
-        }
-        else{
-            sum=dbHelperK.Sum();
-            //dbHelperK.deleteRow(name);
-        }
         if(text=="В корзину"){
             Intent intent=new Intent(Main_analis.this,ActivityKorzina.class);
             startActivity(intent);

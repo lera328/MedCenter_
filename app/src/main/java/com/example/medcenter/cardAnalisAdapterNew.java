@@ -38,31 +38,35 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
+        DbHelperK dbHelperK=new DbHelperK(holder.buttonGet.getContext()); /// МБ ОШИБКААААААА.
         Analis analis=analisList.get(position);
         holder.tvTitle.setText(analis.getName());
         holder.tvTime.setText(analis.getTime_result());
         holder.tvPrice.setText(analis.getPrice());
+        if (dbHelperK.ColObjects(analis.getName())>0)holder.buttonGet.setText("Убрать");
+        else holder.buttonGet.setText("Добавить");
         holder.buttonGet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Button bt=(Button) v;
-                DbHelperK dbHelperK=new DbHelperK(v.getContext()); /// МБ ОШИБКААААААА.
+
                 if(bt.getText().equals("Добавить")) {
 
-                    if (onCardClickListenerNew != null) {bt.setText("Убрать");
+                    if (onCardClickListenerNew != null) {//bt.setText("Убрать");
                         dbHelperK.addNewObject(analis.getName(),Integer.valueOf(analis.getPrice()));
-
+                        if (dbHelperK.ColObjects(analis.getName())>0)bt.setText("Убрать");
+                        else bt.setText("Добавить");
                         onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()), analis.getName());
                     }
                 }
                 else {
-                    if (onCardClickListenerNew != null) {bt.setText("Добавить");
+                    if (onCardClickListenerNew != null) {//bt.setText("Добавить");
                         dbHelperK.deleteRow(analis.getName());
+                        if (dbHelperK.ColObjects(analis.getName())>0)bt.setText("Убрать");
+                        else bt.setText("Добавить");
                         onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),String.valueOf(bt.getText()), analis.getName());
                     }
                 }
-                if (dbHelperK.ColObjects(analis.getName())>0)bt.setText("Убрать");
             }
         });
         holder.layout.setOnClickListener(new View.OnClickListener() {
