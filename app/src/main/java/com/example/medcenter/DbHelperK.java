@@ -81,20 +81,15 @@ public class DbHelperK extends SQLiteOpenHelper {
     }
 
     public void addNewObject(String name,Integer price) {
-
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(NAME, name);
         values.put(PRICE, price);
-
         db.insert(TABLE_NAME, null, values);
-
         db.close();
     }
     public void addNewPerson(String name, String firstName, String secondNAme,
                              String age, String pol,byte[] foto) {
-
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -104,9 +99,7 @@ public class DbHelperK extends SQLiteOpenHelper {
         values.put(PERSON_AGE, age);
         values.put(PERSON_POL, pol);
         values.put(PERSON_FOTO, foto);
-
         db.insert(TABLE_NAME_PERSON, null, values);
-
         db.close();
     }
     public void addNewIndex(int Id) {
@@ -130,9 +123,7 @@ public class DbHelperK extends SQLiteOpenHelper {
         values.put(ZAKAZ_COMENT, com);
         values.put(ZAKAZ_KOLPOZ, kol);
         values.put(ZAKAZ_PRICE, price);
-
         db.insert(TABLE_ZAKAZ, null, values);
-
         db.close();
     }
 

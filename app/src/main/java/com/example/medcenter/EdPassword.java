@@ -23,9 +23,11 @@ String pass="";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ed_password);
         PreferencesManager pm=new PreferencesManager(this);
+        bt_next=findViewById(R.id.button);
         if (pm.isSetPassword()!=0){
             TextView tv=findViewById(R.id.textView7);
             tv.setText("Введите пароль");
+            bt_next.setVisibility(View.INVISIBLE);
         }
         point1=findViewById(R.id.point1);
         point2=findViewById(R.id.point2);
@@ -50,7 +52,7 @@ String pass="";
         point4.setEnabled(false);
         btDel.setEnabled(false);
 
-        bt_next=findViewById(R.id.button);
+
         bt_next.setOnClickListener(this::onClick);
 
     }

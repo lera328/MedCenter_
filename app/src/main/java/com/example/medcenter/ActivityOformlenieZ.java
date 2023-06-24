@@ -252,37 +252,31 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
                 spinnerPacientList.add("\uD83D\uDC69 \t"+pacient.getSecondName() + " " + pacient.getName());
             else spinnerPacientList.add("\uD83D\uDC68 \t"+pacient.getSecondName() + " " + pacient.getName());
         }
-
         spinnerPerson = findViewById(R.id.spinner2);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, spinnerPacientList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerPerson.setAdapter(adapter);
 
         personl=new ArrayList<>();
+
         personl_pos=new ArrayList<>();
         adapter_person_analis=new Adapter_person_analis(ActivityOformlenieZ.this,personl_pos);
-
         recyclerView_pacient_analis.setVisibility(View.VISIBLE);
         recyclerView_pacient_analis.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView_pacient_analis.setAdapter(adapter_person_analis);
-
         btPlusPerson.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //////
                 BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(ActivityOformlenieZ.this,R.style.BottomSheetDialogTheme);
                 View bottomSheetView= LayoutInflater.from(ActivityOformlenieZ.this)
                         .inflate(R.layout.bottom_sheet_getperson,
                                 (LinearLayout)findViewById(R.id.container));
                 RecyclerView spisok=bottomSheetView.findViewById(R.id.recycler);
-
                 AdapterForAddPerson adapter=new AdapterForAddPerson(ActivityOformlenieZ.this,spinnerPacientList
                         ,(AdapterForAddPerson.OnItemClickListener) bottomSheetView.getContext());
                 spisok.setAdapter(adapter);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(ActivityOformlenieZ.this);
                 spisok.setLayoutManager(layoutManager);
-
                 Button btGetP=bottomSheetView.findViewById(R.id.btGetP);
                 btGetP.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -292,7 +286,6 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
                         startActivity(intent);
                     }
                 });
-
                 ImageButton btClose=bottomSheetView.findViewById(R.id.btClose);
                 btClose.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -304,20 +297,13 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
                 btGet.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ////////////\
-                        //personl.add(adapter.getSelectedItem());
                         personl_pos.add(adapter.getSelectedItem());
                         adapter_person_analis.notifyDataSetChanged();
                         spinnerPerson.setVisibility(View.GONE);
                         bottomSheetDialog.dismiss();
                         btGetZakaz.setEnabled(true);
-
-
-                        ////////////
                     }
                 });
-
-
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
             }
@@ -339,12 +325,9 @@ public class ActivityOformlenieZ extends AppCompatActivity implements AdapterFor
     @Override
     public void onItemClick(View view, int position, int SelectedPosition) {
         TextView tv=view.findViewById(R.id.textview);
-
         if (SelectedPosition == position) {
-            //holder.itemView.setSelected(true); //using selector drawable
             tv.setBackground(getDrawable(R.drawable.shape_layout_select));
         } else {
-            //holder.itemView.setSelected(false);
             tv.setBackground(getDrawable(R.drawable.shape_layout));
         }
 

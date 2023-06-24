@@ -25,24 +25,24 @@ public class PreferencesManager {
     public boolean isOnboardShown() {
         return preferences.getBoolean(ONBOARD_KEY, false);
     }
+    public void setOnboardShown(boolean isShown) {
+        preferences.edit().putBoolean(ONBOARD_KEY, isShown).apply();
+    }
     public boolean isRegistred() {
         return preferences.getBoolean(REGISTRATION_KEY, false);
+    }
+    public void setRegistrationShown(boolean isShown,int pass) {
+        preferences.edit().putBoolean(REGISTRATION_KEY, isShown).apply();
     }
     public int isSetPassword() {
         return preferences.getInt(PASSWORD, 0);
     }
 
-    public void setOnboardShown(boolean isShown) {
-        preferences.edit().putBoolean(ONBOARD_KEY, isShown).apply();
-    }
     public void setPassword(int pass) {
         preferences.edit().putInt(PASSWORD, pass).apply();
     }
 
-    public void setRegistrationShown(boolean isShown,int pass) {
-        preferences.edit().putBoolean(REGISTRATION_KEY, isShown).apply();
-        preferences.edit().putInt(PASSWORD_KEY, pass).apply();
-    }
+
 
 
 }

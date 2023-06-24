@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -70,6 +69,7 @@ RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_an_complex, container, false);
 
@@ -78,12 +78,14 @@ RecyclerView recyclerView;
         //String base_url="https://medic.madskill.ru/api/";
         String base_url= "https://5cad-95-189-162-4.ngrok-free.app/api/";
         ///
+
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         InterfaceApi interfaceApi=retrofit.create(InterfaceApi.class);
         Call<AnalisResult> call=interfaceApi.getListAnalises();
+
         call.enqueue(new Callback<AnalisResult>() {
             @SuppressLint("MissingInflatedId")
             @Override
@@ -101,11 +103,16 @@ RecyclerView recyclerView;
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
                     recyclerView.setAdapter(adapter);
                 }
+                else {
+                    ErrorMessage errorDialog = new ErrorMessage();
+                    errorDialog.show(getChildFragmentManager(),"Error message");}
             }
 
             @Override
             public void onFailure(Call<AnalisResult> call, Throwable t) {
-                Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                ErrorMessage errorDialog = new ErrorMessage();
+                errorDialog.show(getChildFragmentManager(),"Error message");
+                //Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         return v;

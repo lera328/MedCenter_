@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -103,12 +102,16 @@ RecyclerView recyclerView;
                     recyclerView = v.findViewById(R.id.recyclerView2);
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
                     recyclerView.setAdapter(adapter);
-                }
+                } else {
+                    ErrorMessage errorDialog = new ErrorMessage();
+                    errorDialog.show(getChildFragmentManager(),"Error message");}
             }
 
             @Override
             public void onFailure(Call<AnalisResult> call, Throwable t) {
-                Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                ErrorMessage errorDialog = new ErrorMessage();
+                errorDialog.show(getChildFragmentManager(),"Error message");
             }
         });
         return v;

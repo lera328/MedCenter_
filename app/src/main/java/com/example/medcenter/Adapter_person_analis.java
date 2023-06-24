@@ -18,31 +18,22 @@ import java.util.List;
 
 public class Adapter_person_analis extends RecyclerView.Adapter<Adapter_person_analis.ViewHolder>{
     private final List<Integer>pos_list;
-
     private OnItemClickListener1 mListener1;
     private final LayoutInflater inflater;
-
     public interface OnItemClickListener1 {
         void onItemClick(View view, int position);
     }
-
     public Adapter_person_analis(Context context, List<Integer> position ){
-
     this.inflater = LayoutInflater.from(context);
-    this.pos_list=position;
-}
-
+    this.pos_list=position;}
     @NonNull
     @Override
     public Adapter_person_analis.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view=inflater.inflate(R.layout.card_pacient_analis,parent,false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-
-
         DbHelperK dbHelperK=new DbHelperK(inflater.getContext());
         List<String> spinnerPacientList = new ArrayList<>();
         for (CardPacient pacient : dbHelperK.getPersonList()) {
@@ -62,17 +53,13 @@ public class Adapter_person_analis extends RecyclerView.Adapter<Adapter_person_a
                holder.linearLayout.addView(checkBox);
            }
        }
-
     }
 
     @Override
     public int getItemCount() {
         return pos_list.size();
     }
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         Spinner spinner;
         LinearLayout linearLayout;
         ViewHolder(View view){
@@ -81,6 +68,4 @@ public class Adapter_person_analis extends RecyclerView.Adapter<Adapter_person_a
             linearLayout=view.findViewById(R.id.linear);
         }
     }
-
-
 }

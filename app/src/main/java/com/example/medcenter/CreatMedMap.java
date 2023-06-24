@@ -31,14 +31,13 @@ Spinner spFloors;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_med_map);
-
         dbHelperK=new DbHelperK(this);
         spFloors=findViewById(R.id.spinner);
         ArrayAdapter<?> adapter =
                 ArrayAdapter.createFromResource(this, R.array.floors,
                         android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-// Вызываем адаптер
+        // Вызываем адаптер
         spFloors.setAdapter(adapter);
 
         btCreate=findViewById(R.id.buttonCreate);

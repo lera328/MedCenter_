@@ -10,7 +10,6 @@ public class AdapterF extends FragmentPagerAdapter//для фрагментов 
     public AdapterF(@NonNull FragmentManager fm) {
         super(fm);
     }
-
     @NonNull
     @Override
     public Fragment getItem(int position) {
@@ -25,7 +24,6 @@ public class AdapterF extends FragmentPagerAdapter//для фрагментов 
                 return new Fragment_analis();
         }
     }
-
     @Override
     public int getCount() {
         return 3;

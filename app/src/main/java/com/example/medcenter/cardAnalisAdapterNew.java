@@ -18,25 +18,16 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import java.util.List;
 
 public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapterNew.ViewHolder> {
-
     private List<Analis> analisList;
     Context context;
     private cardAnalisAdapterNew.OnCardClickListener onCardClickListenerNew;
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_analis, parent, false);
         return new ViewHolder(view);
     }
-
-    public List<Analis> getAnalisList() {
-        return analisList;
-    }
-
-    @Override
+     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         DbHelperK dbHelperK=new DbHelperK(holder.buttonGet.getContext()); /// МБ ОШИБКААААААА.
         Analis analis=analisList.get(position);
@@ -49,7 +40,6 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
             @Override
             public void onClick(View v) {
                 Button bt=(Button) v;
-
                 if(bt.getText().equals("Добавить")) {
 
                     if (onCardClickListenerNew != null) {//bt.setText("Убрать");
@@ -80,7 +70,6 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                                 .inflate(R.layout.bottom_sheet_dialog,
                                 ((LinearLayout)v.findViewById(R.id.btOk))
                                 );
-
                 TextView title=bottomSheetView.findViewById(R.id.tvTitle);
                 title.setText(analis.getName());
                 TextView opisanie=bottomSheetView.findViewById(R.id.tvOpisanie);
@@ -96,7 +85,6 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                 bg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         if(bg.getText()!="В корзину"){
                             dbHelperK.addNewObject(analis.getName(),Integer.valueOf(analis.getPrice()));
                             onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),
@@ -106,7 +94,6 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
                         else {
                             onCardClickListenerNew.onCardClickNew(position,Integer.valueOf(analis.getPrice()),
                                     "В корзину", analis.getName());
-
                         }
                     }
                 });
@@ -121,32 +108,24 @@ public class cardAnalisAdapterNew extends RecyclerView.Adapter<cardAnalisAdapter
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return analisList.size();
     }
-
     public interface OnCardClickListener{
-
-
         void onCardClickNew(int position, int cost, String text, String name);
     }
-
     public cardAnalisAdapterNew(List<Analis> analisList, Context context, OnCardClickListener onCardClickListener) {
         this.analisList = analisList;
         this.context = context;
         this.onCardClickListenerNew = onCardClickListener;
     }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         public TextView tvTitle;
         public TextView tvTime;
         public TextView tvPrice;
         public Button buttonGet;
         public ConstraintLayout layout;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTitle);

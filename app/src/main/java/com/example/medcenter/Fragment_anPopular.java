@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -78,10 +77,8 @@ public class Fragment_anPopular extends Fragment {
         View v= inflater.inflate(R.layout.fragment_an_popular, container, false);
         //List<cardAnalisModel> cardList = new ArrayList<>();
         analisList = new ArrayList();
-
         //String base_url="https://medic.madskill.ru/api/";
         String base_url= "https://5cad-95-189-162-4.ngrok-free.app/api/";
-        ///
         Retrofit retrofit=new Retrofit.Builder()
                 .baseUrl(base_url)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -96,47 +93,23 @@ public class Fragment_anPopular extends Fragment {
                 {
                     List<Analis> analisResponseList = response.body().getAnalyses();
                     for (Analis analis: analisResponseList){
-
-
                         analis.setPrice(analis.getPrice().replace(".00",""));
                         if (analis.getCategory().contains("1")) analisList.add(analis);
                     }
-
                     cardAnalisAdapterNew adapter = new cardAnalisAdapterNew(analisList, getActivity(), (cardAnalisAdapterNew.OnCardClickListener) getActivity());
                     recyclerView = v.findViewById(R.id.recyclerView2);
                     recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
                     recyclerView.setAdapter(adapter);
-                }
+                } else {
+                    ErrorMessage errorDialog = new ErrorMessage();
+                    errorDialog.show(getChildFragmentManager(),"Error message");}
             }
-
             @Override
             public void onFailure(Call<AnalisResult> call, Throwable t) {
-                Toast.makeText(getActivity(), "Ошибка загрузки данных"+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                ErrorMessage errorDialog = new ErrorMessage();
+                errorDialog.show(getChildFragmentManager(),"Error message");
             }
         });
-
-
-//            if (response.isSuccessful()) {
-//                List<Analis> analisResponseList = response.body();
-//                for (Analis analis : analisResponseList) {
-//                    analisList.add(analis);
-//                }
-//                cardAnalisAdapterNew adapter = new cardAnalisAdapterNew(analisList, getActivity(), (cardAnalisAdapterNew.OnCardClickListener) getActivity());
-//                recyclerView = v.findViewById(R.id.recyclerView1);
-//                recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
-//                recyclerView.setAdapter(adapter);
-      ///
-        //cardList.add(new cardAnalisModel("ПЦР-тест на определение РНК коронавируса стандартный", 2,1800));
-        //cardList.add(new cardAnalisModel("Клинический анализ крови с лейкоцитарной формулировкой", 1,690));
-        //cardList.add(new cardAnalisModel("Биохимический анализ крови, базовый", 1,2440));
-        //cardList.add(new cardAnalisModel("СОЭ (венозная кровь)", 1,240));
-        //CardAdapterKorzina adapter = new CardAdapterKorzina( cardList,getActivity(), (CardAdapterKorzina.OnCardClickListener) getActivity());
-       //Analis analis=new Analis(1,"jlk","jlkj","50","ghvhbj","ygjh","gjh","kgjh");
-       //analisList.add(analis);
-        //cardAnalisAdapterNew adapter=new cardAnalisAdapterNew(analisList, getActivity(),(cardAnalisAdapterNew.OnCardClickListener) getActivity());
-        //recyclerView = v.findViewById(R.id.recyclerView1);
-        //recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false));
-        //recyclerView.setAdapter(adapter);
         return v;
     }
 
